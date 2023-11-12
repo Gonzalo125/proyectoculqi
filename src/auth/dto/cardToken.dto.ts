@@ -1,5 +1,5 @@
-import { IsCreditCard, IsEmail, Length, IsInt, Min, Max, Matches, IsString, IsNumber,MinLength, MaxLength,IsNumberString ,IsDateString} from 'class-validator';
-import { isNumberObject } from 'util/types';
+import { IsEmail, Length,Matches, IsString,MinLength, MaxLength,IsNumberString } from 'class-validator';
+
 export class CardTokenDto{
     @IsEmail()
     @Length(5, 100)

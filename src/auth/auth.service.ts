@@ -66,7 +66,7 @@ export class AuthService {
     try {
       const isValid = await this.guardarInformacionTarjeta(cardToken.card_number.toString());
       if (!isValid) {
-        console.error('Número de tarjeta inválido. No se guarda la información.');
+        console.error('Número de tarjeta inválido. Error al guardado de información.');
       }
       return isValid;
     } catch (error) {
@@ -102,14 +102,14 @@ export class AuthService {
     return this.validarAlgoritmoLuhn(card_number);
   }
 
-  async findOne(card_number: number): Promise<CardDataDto> {
-    const cat = await this.cacheService.get(`card-${card_number}`);
+ /* async findOne(card_number: number): Promise<CardDataDto> {
+    const cat = await this.cacheService.get(`card-${token}`);
     if (!cat) {
       throw new BadRequestException('Card not found');
     }
     return cat as CardDataDto;
   }
-
+*/
   // ...
 
   async getCardDataFromToken(token: string): Promise<CardResponse> {
@@ -125,12 +125,8 @@ export class AuthService {
       if (!cardData || Object.keys(cardData).length === 0) {
         throw new Error('Invalid token or card data not found');
       }else{
-       
-       // const card = cardData as CardDataDto;
+    
         const card= JSON.parse(String(cardData));
-        console.log("mensaje2:"+card);
-        console.log("mensaje2.email:"+card.email);
-
         obj= new CardResponse();
             obj.card_number=card.card_number;
             obj.email=card.email;
@@ -147,21 +143,7 @@ export class AuthService {
     }
   }
   
-  // ...
   
-  async validateApiKey(apiKey: string): Promise<{ data: CardResponse }> {
-    try {
-      if (!apiKey || apiKey !== process.env.API_KEY) {
-        throw new Error('Invalid API key');
-      }
-  
-      const data = await this.getCardDataFromToken(apiKey);
-      return { data };
-    } catch (error) {
-      console.error('Error validating API key:', error.message);
-      throw new BadRequestException('Invalid API key');
-    }
-  }
 
   async verifyAndGetData(token: string): Promise<CardResponse> {
     try {

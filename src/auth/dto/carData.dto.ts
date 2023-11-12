@@ -1,4 +1,4 @@
-import { IsCreditCard, IsEmail, Length, IsInt, Min, Max, Matches, IsString, IsNumber,MinLength,MaxLength, IsNumberString, IsDateString, isNumberString } from 'class-validator';
+import {  IsEmail, Length,  Matches, IsString, MinLength,MaxLength, IsNumberString } from 'class-validator';
 export class CardDataDto{
     @IsEmail()
     @Length(5, 100)

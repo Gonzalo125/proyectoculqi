@@ -19,18 +19,6 @@ export class AuthController {
     return this.authService.register(cardToken);
   }
 
-  @Post('verify-token')
- // override TTL to 30 seconds
-  async verifyToken(@Headers('authorization') token: string): Promise<{ message: string }> {
-    try {
-      if (!this.authService.validateApiKey(token)) {
-        throw new UnauthorizedException('Token inválido');
-      }
-      return { message: 'Token válido' };
-    } catch (error) {
-      throw new UnauthorizedException('Token inválido');
-    }
-  }
 
   @Post('get-card-data')
   async getCardData(@Headers('authorization') token: string): Promise<CardResponse> {
