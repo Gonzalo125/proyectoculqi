@@ -1,5 +1,25 @@
+version: '3'
+
 services:
-  apitokenizador:
-    image: 'redis:latest'
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - .:/usr/src/app
+    command: npm run start:dev  # Run a command against the development stage of the image
     ports:
-      - '6379:6379'
+      - "3000:3000"
+    depends_on:
+      - redis
+
+  redis: # Name of container
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+
+volumes:
+  redis:
+    driver: local
