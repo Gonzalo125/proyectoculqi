@@ -6,7 +6,6 @@ import { CardResponse } from './dto/cardResponse.dto';
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
-import { request } from 'http';
 @Controller('auth')
 @UseInterceptors(CacheInterceptor)
 export class AuthController {
