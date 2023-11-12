@@ -6,17 +6,20 @@ export class CardTokenDto{
     email: string;
   
     @IsInt()
+    @Length(13,16)
     card_number: number;
   
     @IsInt()
+    @Length(3,4)
     cvv: number;
   
     @IsString()
+    @Length(1,2)
     expiration_month: string;
   
     @IsString()
-    expiration_year: string;
-    
-    
-    
+    @Length(4)
+    @Min(new Date().getFullYear())
+    @Max(new Date().getFullYear() + 5)
+    expiration_year: string; 
 }

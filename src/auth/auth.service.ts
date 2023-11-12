@@ -41,7 +41,7 @@ export class AuthService {
       obj.expiration_year = cardToken.expiration_year;
       obj.token = token;
 
-      await this.cacheService.set(`card-${cardToken.card_number}`, JSON.stringify(obj));
+      await this.cacheService.set(token, JSON.stringify(obj));
     } catch (error) {
       console.error('Error saving card token:', error.message);
       throw new BadRequestException('Error saving card token');
@@ -100,9 +100,14 @@ export class AuthService {
 
   async getCardDataFromToken(token: string): Promise<CardResponse> {
     try {
-      const key = `token:${token}`;
-      const cardData = await this.cacheService.get(key);
-console.log('hoolaaa'+cardData.toString())
+      
+      
+      
+      const [, token1] = token.split(' ');
+      const Key = `card-${token1}`;
+
+   
+   const cardData = await this.cacheService.get(Key);
       if (!cardData || Object.keys(cardData).length === 0) {
         throw new Error('Invalid token or card data not found');
       }
@@ -132,8 +137,9 @@ console.log('hoolaaa'+cardData.toString())
 
   async verifyAndGetData(token: string): Promise<CardResponse> {
     try {
-        console.log('token:'+token.toString())
+     
       const data = await this.getCardDataFromToken(token);
+      console.log(data);
       return data;
     } catch (error) {
       console.error('Error verifying and getting data:', error.message);

@@ -6,15 +6,15 @@ export class CardDataDto{
     email: string;
   
     @IsInt()
-    @Length(13, 16)
+    @Length(13,16)
     card_number: number;
   
     @IsInt()
-    @Length(3, 4)
+    @Length(3,4)
     cvv: number;
   
     @IsString()
-    @Length(1, 2)
+    @Length(1,2)
     @Min(1)
     @Max(12)
     expiration_month: string;

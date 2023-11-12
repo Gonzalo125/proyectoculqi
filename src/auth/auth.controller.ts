@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CardResponse } from './dto/cardResponse.dto';
 import { CacheKey, CacheTTL } from '@nestjs/cache-manager';
 import { CacheInterceptor } from '@nestjs/cache-manager';
-import { AuthGuard } from './guard/auth.guard';
+
 import { request } from 'http';
 @Controller('auth')
 @UseInterceptors(CacheInterceptor)
@@ -37,9 +37,5 @@ export class AuthController {
     return this.authService.verifyAndGetData(token);
   }
 
-  @Post('get-card-data3')
-  @UseGuards(AuthGuard)
-  async getCardData2(@Request() req) {
-    return req.card;
-  }
+ 
 }
