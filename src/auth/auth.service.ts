@@ -105,8 +105,7 @@ export class AuthService {
         try {
 
             const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString('ascii'));
-            console.log(payload);
-            console.log(payload.cardToken.card_number);
+        
             const varkey = payload.cardToken.card_number;
             const Key = `${varkey}`;
             let obj = new CardResponse();
@@ -134,7 +133,7 @@ export class AuthService {
         try {
 
             const data = await this.getCardDataFromToken(token);
-            console.log(data);
+            
             return data;
         } catch (error) {
             console.error('Error verifying and getting data:', error.message);
