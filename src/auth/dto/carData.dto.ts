@@ -1,27 +1,26 @@
-import { IsCreditCard, IsEmail, Length, IsInt, Min, Max, Matches, IsString } from 'class-validator';
+import { IsCreditCard, IsEmail, Length, IsInt, Min, Max, Matches, IsString, IsNumber,MinLength,MaxLength, IsNumberString, IsDateString, isNumberString } from 'class-validator';
 export class CardDataDto{
     @IsEmail()
     @Length(5, 100)
     @Matches(/@(gmail\.com|hotmail\.com|yahoo\.es)$/, { message: 'Invalid email domain.' })
     email: string;
   
-    @IsInt()
-    @Length(13,16)
+    @IsNumberString()
+    @MinLength(13)
+    @MaxLength(16)
     card_number: number;
   
-    @IsInt()
-    @Length(3,4)
+    @IsNumberString()
+    @MinLength(3)
+    @MaxLength(4)
     cvv: number;
   
     @IsString()
     @Length(1,2)
-    @Min(1)
-    @Max(12)
     expiration_month: string;
   
     @IsString()
-    @Min(new Date().getFullYear())
-    @Max(new Date().getFullYear() + 5)
+    @Length(4)
     expiration_year: string;
 
     token: string;

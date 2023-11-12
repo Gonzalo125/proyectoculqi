@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { CacheModule } from '@nestjs/cache-manager';
-import { TokenizadorModule } from './tokenizador/tokenizador.module';
 import { AuthModule } from './auth/auth.module';
 import * as redisStore from 'cache-manager-redis-store';
 
@@ -13,9 +12,9 @@ import * as redisStore from 'cache-manager-redis-store';
       store: redisStore,
       host: 'localhost',
       port: 6379,
+      ttl: 60
       
     }),
-    TokenizadorModule,
     AuthModule,
   ],
  

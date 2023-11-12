@@ -34,12 +34,26 @@ export class AuthService {
 
   async saveToken(cardToken: CardTokenDto, token: string): Promise<void> {
     try {
-      const obj = new CardResponse();
+      const obj = new CardDataDto();
       obj.card_number = cardToken.card_number;
       obj.email = cardToken.email;
-      obj.expiration_month = cardToken.expiration_month;
-      obj.expiration_year = cardToken.expiration_year;
+      if (parseInt(cardToken.expiration_month, 10) >= 1 && parseInt(cardToken.expiration_month, 10) <= 12) {
+        obj.expiration_month =cardToken.expiration_month;
+
+      }else{
+        throw new BadRequestException('El numero debe estar en el rango de 1 a 12');
+      }
+      const currentYear = new Date().getFullYear();
+      if( parseInt(cardToken.expiration_year, 10) >= currentYear &&
+      parseInt(cardToken.expiration_year, 10) <= currentYear + 5){
+        obj.expiration_year= cardToken.expiration_year;
+
+      }else{
+        throw new BadRequestException('El rango de año debe ser el actual y 5 años mas');
+      }
+       
       obj.token = token;
+      obj.cvv = cardToken.cvv;
 
       await this.cacheService.set(token, JSON.stringify(obj));
     } catch (error) {
@@ -104,15 +118,29 @@ export class AuthService {
       
       
       const [, token1] = token.split(' ');
-      const Key = `card-${token1}`;
+      const Key = `${token1}`;
 
-   
+      let  obj= new CardResponse();
    const cardData = await this.cacheService.get(Key);
       if (!cardData || Object.keys(cardData).length === 0) {
         throw new Error('Invalid token or card data not found');
+      }else{
+       
+       // const card = cardData as CardDataDto;
+        const card= JSON.parse(String(cardData));
+        console.log("mensaje2:"+card);
+        console.log("mensaje2.email:"+card.email);
+
+        obj= new CardResponse();
+            obj.card_number=card.card_number;
+            obj.email=card.email;
+            obj.expiration_month=card.expiration_month;
+            obj.expiration_year=card.expiration_year;
+            obj.token=card.token;
+        
       }
 
-      return cardData as CardResponse;
+      return obj;
     } catch (error) {
       console.error('Error getting card data from token:', error.message);
       throw new BadRequestException('Invalid token or card data not found');
