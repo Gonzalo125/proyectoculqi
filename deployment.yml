@@ -24,7 +24,7 @@ spec:
   volumes:
     - name: api-volume
       hostPath:
-        path: /root/proyectoculqi
+        path: C:\Users\sayaj\Documents\workspaceNode\apitokenizador
     - name: redis-volume
       emptyDir: {}
 

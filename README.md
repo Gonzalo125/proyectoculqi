@@ -26,6 +26,46 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+
+## PROYECTO
+
+Se debe de ralizar una api de tokenizacion que gener token y que se pueda realizar la obtencion de datos a traves del token generado.
+La api debe estar desarrollado en node y typescript y subido a un cluster de kuberntes local o a un EKS. Tambiens e debe realizar pruebas con Jest-koa-mocks. La api debe cumplir con los requerimientos que plantea el examen y tambien la api debe estar conectado a una bd NoSql como Redis.
+
+## DESARROLLO DEL PROYECTO
+
+Se utilizo el framework de Nestjs y se realizaron pruebas con Jest. Luego se desplego la aplicacion en un docker-compose y luego a un
+minikube.
+
+Al termino de desarrollar la api se realizo las pruebas locaales con ayuda de estos comandos:
+
+$ npm run build
+
+$ npm run start:dev
+
+Para ejecutar las pruebas se utilzo el comando 
+
+$ npm test
+
+se deplegó  un redis contenerizado utilizando el archivo docker-compose con la ayuda del siguiente comando:
+
+$ docker-compose up
+
+
+Luego de ello se realizaron las pruebas correspondientes con el postman y despues se añadio al archivo de docker-compose, la
+configuracion para dockerizar la api desarrollada. Luego de levantar los dos contedores( api y redis) con docker-compose up,
+se realizo un archivo de manifiesto llamado deployment.yml para levantarlo en un minukube. Los comandos para realizar
+el deploy en minikube fueron:
+
+$ minikube start
+
+$ kubectl get pods
+
+$ kubectl get services
+
+$ kubectl apply -f deployment.yaml
+
+
 ## Installation
 
 ```bash
